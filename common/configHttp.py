@@ -61,6 +61,7 @@ class ConfigHttp:
             return None
 
 
+
 if __name__ == '__main__':
     testconf = ConfigHttp()
     testconf.set_url('Register/login/login.do')

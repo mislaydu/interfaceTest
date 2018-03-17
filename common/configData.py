@@ -30,6 +30,28 @@ def get_xls(xls_name, sheet_name):
     return cls
 
 
+def get_params_xls(xls_name, sheet_name):
+    pls = []
+    # get xls file's path
+    xlsPath = os.path.join(proDir, "testFile", 'case', xls_name)
+
+    # open xls file
+    file = open_workbook(xlsPath)
+
+    # get sheet by name
+    sheet = file.sheet_by_name(sheet_name)
+    # 获取表格行数
+    nrows = sheet.nrows
+    # 获取表格列数
+    # ncols = sheet.ncols
+    for i in range(nrows):
+        if sheet.row_values(i)[0] == u'case_name':
+            # 获取整行的值存入数组
+            pls.append(sheet.row_values(i))
+
+    return pls
+
+
 # ****************************** read SQL xml ********************************
 database = {}
 
@@ -77,8 +99,6 @@ def get_json(response, key):
     json_value = return_json[key]
     return json_value
 
-def get_cookie():
-
     # ****************************** read interfaceURL xml ********************************
 
 
@@ -124,9 +144,11 @@ def get_value_from_return_json(json, name1, name2):
 
 
 if __name__ == "__main__":
-    abc = get_xls('userCase.xlsx', 'login')
-    for aa in abc:
-        print(aa)
+    # abc = get_xls('userCase.xlsx', 'login')
+    # for aa in abc:
+    #     print(aa)
 
-    test_url = get_url_from_xml('login')
-    print(test_url)
+    par = get_params_xls('userCase.xlsx','login')
+
+    for b in par:
+        print(b)
