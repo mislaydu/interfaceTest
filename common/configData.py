@@ -47,7 +47,7 @@ def get_params_xls(xls_name, sheet_name):
     for i in range(nrows):
         if sheet.row_values(i)[0] == u'case_name':
             # 获取整行的值存入数组
-            pls.append(sheet.row_values(i))
+            pls = sheet.row_values(i)
 
     return pls
 
@@ -122,9 +122,9 @@ def show_return_msg(response):
     :param response:
     :return:
     """
-    url = response.url
+    # url = response.url
     msg = response.text
-    print("\n请求地址：" + url)
+    # print("\n请求地址：" + url)
     # 可以显示中文
     print("\n请求返回值：" + '\n' + json.dumps(json.loads(msg), ensure_ascii=False, sort_keys=True, indent=4))
 
@@ -143,12 +143,12 @@ def get_value_from_return_json(json, name1, name2):
     return value
 
 
-if __name__ == "__main__":
-    # abc = get_xls('userCase.xlsx', 'login')
-    # for aa in abc:
-    #     print(aa)
-
-    par = get_params_xls('userCase.xlsx','login')
-
-    for b in par:
-        print(b)
+# if __name__ == "__main__":
+#     # abc = get_xls('userCase.xlsx', 'login')
+#     # for aa in abc:
+#     #     print(aa)
+#
+#     par = get_params_xls('userCase.xlsx', 'login')
+#
+#     for b in par:
+#         print(b)

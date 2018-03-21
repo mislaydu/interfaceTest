@@ -1,3 +1,0 @@
-2018-03-09 15:36:33,972 - root - ERROR - 'AllTest' object has no attribute 'set_case_suite'
-2018-03-09 15:36:33,972 - root - INFO - *********TEST END*********
-2018-03-09 15:36:34,082 - root - ERROR - Connection unexpectedly closed
