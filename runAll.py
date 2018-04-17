@@ -33,7 +33,7 @@ class AllTest:
             fb.close()
 
     # set case suit
-    def set_case_suit(self):
+    def set_case_suite(self):
         self.set_case_list()
         test_suite = unittest.TestSuite()
         suite_model = []

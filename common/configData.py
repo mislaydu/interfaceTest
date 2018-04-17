@@ -14,10 +14,10 @@ def get_xls(xls_name, sheet_name):
     xlsPath = os.path.join(proDir, "testFile", 'case', xls_name)
 
     # open xls file
-    file = open_workbook(xlsPath)
+    workbook = open_workbook(xlsPath)
 
     # get sheet by name
-    sheet = file.sheet_by_name(sheet_name)
+    sheet = workbook.sheet_by_name(sheet_name)
     # 获取表格行数
     nrows = sheet.nrows
     # 获取表格列数
@@ -30,6 +30,7 @@ def get_xls(xls_name, sheet_name):
     return cls
 
 
+#  返回接口参数名
 def get_params_xls(xls_name, sheet_name):
     pls = []
     # get xls file's path
@@ -50,6 +51,14 @@ def get_params_xls(xls_name, sheet_name):
             pls = sheet.row_values(i)
 
     return pls
+
+
+def get_xls_sheet(xls_name):
+    # get xls file's path
+    xlsPath = os.path.join(proDir, "testFile", 'case', xls_name)
+    workbook = open_workbook(xlsPath)
+    sheetnames = workbook.sheet_names()
+    return sheetnames
 
 
 # ****************************** read SQL xml ********************************
@@ -141,7 +150,6 @@ def get_value_from_return_json(json, name1, name2):
     group = info[name1]
     value = group[name2]
     return value
-
 
 # if __name__ == "__main__":
 #     # abc = get_xls('userCase.xlsx', 'login')

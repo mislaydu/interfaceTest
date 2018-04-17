@@ -12,6 +12,12 @@
         <action>login.do</action>
     </url>
 
+        <url name="bugfree">
+        <group>index.php</group>
+        <module>site</module>
+        <action>login</action>
+    </url>
+
     <url name="registerQuick">
         <group>User</group>
         <module>Member</module>

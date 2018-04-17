@@ -5,30 +5,37 @@ from common import Log as Log
 from common import configData
 from common import configHttp as ConfigHttp
 
-test_xls = configData.get_xls("userCase.xlsx", "login")
-
-xls_params = configData.get_params_xls("userCase.xlsx", "login")
-
+login_xls = configData.get_xls("userCase.xlsx", "login")
 localReadConfig = readConfig.ReadConfig()
 configHttp = ConfigHttp.ConfigHttp()
 info = {}
 
 
-@paramunittest.parametrized(*test_xls)
+@paramunittest.parametrized(*login_xls)
 class Login(unittest.TestCase):
-
-    def setParameters(self, *params):
-        self.par = xls_params
-        self.list_parms = list(params)
-        # get case_name，method，msg
-        self.case_name = str(self.list_parms[0])
-        self.method = str(self.list_parms[1])
-        # bulid te request data
-        self.dt_parm = dict(zip(self.par, self.list_parms))
-        # delete the case_name, method, msg
-        del self.dt_parm['case_name']
-        del self.dt_parm['method']
-        del self.dt_parm['msg']
+    def setParameters(self, case_name, method, username, password, checkcode, msg):
+        """
+        set params
+        :param case_name:
+        :param method:
+        :param username:
+        :param password:
+        :param checkcode
+        :param code:
+        :param data:
+        :param msg:
+        :return:
+        """
+        self.case_name = str(case_name)
+        self.method = str(method)
+        self.username = str(username)
+        self.password = str(password)
+        self.checkcode = str(checkcode)
+        # self.code = str(code)
+        # self.data = str(data)
+        self.msg = str(msg)
+        self.response = None
+        self.info = None
 
     def description(self):
         """
@@ -39,11 +46,12 @@ class Login(unittest.TestCase):
 
     def setUp(self):
         """
+
         :return:
         """
         self.log = Log.MyLog.get_log()
         self.logger = self.log.get_logger()
-        print(self.case_name + " Readly to start testing\n")
+        print(self.case_name + " Readly to start testing")
 
     def testLogin(self):
         """
@@ -68,24 +76,26 @@ class Login(unittest.TestCase):
         configHttp.set_headers(header)
         print("step 2：设置header")
 
-        # test interface
-        print("step 4：请求方法：" + self.method)
+        # set params
+        data = {"username": self.username, "password": self.password, "checkCode": self.checkcode}
+        configHttp.set_data(data)
+        print("step 3：设置发送请求的参数" + str(configHttp.data))
 
-        if self.method == 'get':
-            configHttp.set_params(self.dt_parm)
-            print("step 3：设置发送请求的参数：" + str(configHttp.params))
-            self.response = configHttp.get()
-        elif self.method == 'post':
-            configHttp.set_data(self.dt_parm)
-            print("step 3：设置发送请求的参数：" + str(configHttp.data))
-            self.response = configHttp.post()
+        # test interface
+        self.response = configHttp.post()
+        print(self.response.json())
+        # method = str(self.return_json.request)[
+        #          int(str(self.return_json.request).find('[')) + 1:int(str(self.return_json.request).find(']'))]
+        # print("第四步：发送请求\n\t\t请求方法：" + method)
 
         # check result
+
         self.checkResult()
-        print("step 5：检查结果\n")
+        print("第五步：检查结果")
 
     # def tearDown(self):
     #     """
+    #
     #     :return:
     #     """
     #     info = self.info
@@ -121,3 +131,4 @@ class Login(unittest.TestCase):
 
 if __name__ == '__main__':
     login_test = Login()
+    login_test.testLogin()
